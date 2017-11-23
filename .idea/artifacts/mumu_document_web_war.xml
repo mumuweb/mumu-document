@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="mumu-document-web:war">
+    <output-path>$PROJECT_DIR$/mumu-document-web/target</output-path>
+    <root id="archive" name="tool.war">
+      <element id="artifact" artifact-name="mumu-document-web:war exploded" />
+    </root>
+  </artifact>
+</component>

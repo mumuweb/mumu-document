@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title text="${docBaseInfo.title}+' - 分享文档'">阅读 - 分享文档</title>
+    <link rel="stylesheet" href="css/view.css"/>
+</head>
+<body>
+
+<!--/*******阅读正文*******/-->
+<div class="content">
+    <div class="mainpart" id="mainpart">
+        <div class="layout02" id="mainPanel">
+            <div class="commonbox2" id="box1">
+                <div class="doctopic">
+                    <h1 title="${docBaseInfo.title}">
+                        <img src="ppt.png">黄金投资途径
+                    </h1>
+                    <div style="float:right;padding: 10px 0;color: #999; padding-right:10px;font-size: 14px;">
+                        格式：docx<span style="padding: 0 10px;">|</span>
+                        浏览次数：100<span style="padding: 0 10px;">|</span>
+                        上传日期：2017-06-28
+                    </div>
+                </div>
+            </div>
+            <div class="page-view" id="pageContainer">
+                <div class="outer-page" id="outer_page_1">
+                    <div class="inner-page scrollLoading" id="page_1">
+                        <div id="swf_1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*******阅读工具条*******/-->
+<div class="reader-tools-bar">
+    <div class="mainpart" style="min-width:720px;">
+        <ul class="left">
+            <li class="paging">
+                <input type="button" title="上一页" class="no-prev" id="prePageButton" />
+                <input type="button" title="下一页" class="nextsmall" id="nextPageButton" />
+            </li>
+            <li class="pages"></li>
+            <li class="text"><input type="text" id="pageNumInput" />&nbsp;/&nbsp;25</li>
+            <li class="btns"><input type="button" id="gotoPageButton" /></li>
+        </ul>
+        <ul class="right">
+            <li title="放大" class="zoomb" id="zoomInButton"></li>
+            <li title="缩小" class="no-zooms" id="zoomOutButton"></li>
+            <li title="全屏显示" class="fullscreen" id="frscreen"></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+<script src="js/jquery/jquery-2.1.1.min.js"></script>
+<script src="js/layui/layui.js"></script>
+<script src="js/swfobject.js"></script>
+<script src="js/scrollFix.js"></script>
+<script type="text/javascript">
+    var readerConfig = {
+        allPage: '25',
+        productId: '1',
+        flashUrl: './swf/'
+    };
+</script>
+<script src="js/view2.js"></script>
+<script type="text/javascript">
+layui.use(['element'], function(){
+    var element = layui.element();
+});
+</script>
+</html>

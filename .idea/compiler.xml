@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mumu-document-api" />
+        <module name="mumu-document-converter" />
+        <module name="mumu-document-service" />
+        <module name="mumu-document-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="mumu-document" target="1.8" />
+      <module name="mumu-document-api" target="1.8" />
+      <module name="mumu-document-converter" target="1.8" />
+      <module name="mumu-document-service" target="1.8" />
+      <module name="mumu-document-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

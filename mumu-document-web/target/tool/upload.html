@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>文档上传 - baby慕慕工具</title>
+	<style type="text/css">
+    .header {top: 0; box-shadow: 0 1px 12px rgba(16, 6, 25, 0.2); z-index: 999;}
+    .layui-btn {background-color: #1BAAE6; border-radius: 5px;}
+    .clearfix:after {clear: both; content: ' '; display: block; font-size: 0; line-height: 0; visibility: hidden; wid 0; height: 0;}
+	.fl {float: left;}
+	.fr { float: right;}
+    .footer {background-color: #ffffff;}
+        li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+</style>
+</head>
+
+<body>
+<section style="background: #e5e8ec; overflow: hidden; padding-top: 75px;">
+    <div class="main clearfix" style="background-color: #fff;">
+        <div class="uploadmain">
+            <div class="bartile"><i class="iconfont icon-yunupload"></i> 上传文档</div>
+            <div class="updiv">
+                <div class="c" id="up_area">
+                    <div class="upbtn">
+                        <a id="selectfiles" class="selectfiles layui-btn" href="javascript:;">
+                            <i class="iconfont icon-shangchuan"></i> 分享我的文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="uptip">
+                <div class="tile">温馨提示</div>
+                <div>
+                    <div>1.您可以上传日常积累和撰写的文档资料，如模板、总结，文档≤60MB，支持多种文档类型：</div>
+                    <div class="ext clearfix">
+                        <span class="doc">doc,docx</span>
+                        <span class="ppt">ppt,pptx</span>
+                        <span class="xls">xls,xlsx</span>
+                        <span class="pdf">pdf</span>
+                        <span class="txt">txt</span>
+                    </div>
+                    <div>2.上传涉及侵权内容的文档将会被移除。</div>
+                    <div>3.本站只用作演示。</div>
+                    <div>4.为营造绿色网络环境，严禁上传含有淫秽色情及低俗信息等文档。</div>
+                    <div>5.最终解释权归本站所有。</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        
+            <div class="queues" style="display: none;">
+                <div class="info clearfix">
+                    <div class="fl">
+                        <p class="p1">您已成功上传 <span id="suc">0</span> 份文档，失败 <span id="fals">0</span> 份。</p>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+        
+                <div id="container">
+                    <div class="clear"></div>
+                    <div id="allsel" style="position:relative; border-bottom: solid 1px #e8e8f0;">
+                        <div class="editv" style="display:block; position:static; padding:0; border-bottom:none">
+                            <div class="inf fr" style="width:400px;">
+                                <div class="line clearfix">
+                                    <div class="w fl">&nbsp;</div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+        
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="barbtn">
+                    <div class="clear"></div>
+                </div>
+            </div>
+        
+        </div>
+        
+        <div id="alluploadsuc" style="display:none">
+            <div class="cont1">
+                <p style="padding:10px 0">
+                    <span style="color:#666; font-size: 18px; font-weight:bold; padding-right:10px;">恭喜！文档上传成功</span>
+                    <a class="blue" href="doc/upload">继续上传 &gt;</a>
+                </p>
+                <p>
+                    <span style="color:#a7a7a7;padding-right:10px;">注：如文档含有盗版内容，请立刻删除 </span>
+                    <a class="blue" href="@{/user/}">查看已上传文档 &gt;</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="js/jquery/jquery-2.1.1.min.js"></script>
+<script src="js/plupload/2.1.9/js/plupload.full.min.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/upload.js"></script>
+<script type="text/javascript">
+    var globalFileName=null,web_url=null;
+    /*var href = window.location.href;
+    var portIndexOf=href.indexOf(":",8);
+    if(portIndexOf>-1){
+        web_url=href.substring(0,portIndexOf);
+    }else{
+        portIndexOf = href.indexOf("/", 8);
+        if (portIndexOf > -1) {
+            web_url = href.substring(0, portIndexOf);
+        }
+    }
+    web_url= "/";*/
+$(function () {
+    //radio单击事件
+    $(".radio").on("click", function () {
+        var t = $(this);
+        $("b",t.parent()).removeClass("check")
+        $("b", t).addClass("check")
+        $("input", t).prop({ checked: true });
+    });
+
+    $(".dropbox > em,.dropbox > span,.dropboxs > em,.dropboxs > span").on("click", function () {
+        var m= $(this).parent().find(".droplist");
+        if (m.is(":visible"))
+            $(this).parent().find(".droplist").hide();
+        else
+            $(this).parent().find(".droplist").show();
+    });
+
+    $(".dropbox > ul > li").on("click", function () {
+        var t = $(this);
+        t.parent().hide().find(".check").removeClass("check");
+        t.parent().parent().find("input").val(t.attr("data-val"))
+        t.addClass("check")
+        t.parent().parent().find("span").html(t.html())
+    })
+
+    $(".droplist  > .fis > li").on("click",function(){
+        var t = $(this);
+        t.parent().find(".check").removeClass("check");
+        t.addClass("check")
+        t.parent().parent().find("input").val(t.attr("data-val"))
+        var htxt=t.parent().parent().parent().find(".htxt")
+        htxt.html(t.html()+" &raquo; " );
+
+        t.parent().parent().parent().parent().parent().parent().parent().find(".serr").html("");
+
+        var s= t.parent().parent().find(".sec");
+        s.empty();
+        var pid=parseInt(t.attr("data-val"));
+        $.each(sc,function(i){
+            if(sc[i].Other== pid)
+                s.append("<li data-val='"+sc[i].Id+"'>"+sc[i].Name+"</li>")
+        });
+
+       s.find("li").on("click",function(){
+            var tt = $(this);
+            tt.parent().find(".check").removeClass("check");
+            tt.addClass("check")
+            tt.parent().parent().hide();
+            htxt.html(t.html()+" &raquo; "+tt.html() );
+            tt.parent().parent().find("input").val(t.attr("data-val")+","+tt.attr("data-val"))
+        });
+    });
+
+    $("#allsel .doup").on("click",function(){
+        $("#allsel").hide();
+    });
+
+    var count = 0;
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'selectfiles',
+        url: 'doc/upload',
+        flash_swf_url: 'js/plupload/2.1.9/js/Moxie.swf',
+        silverlight_xap_url: 'js/plupload/2.1.9/js/Moxie.xap',
+        drop_element: 'up_area',
+        filters: {
+            max_file_size: '60mb',
+            mime_types: [
+                { title: "选择文件", extensions: "doc,ppt,xls,pdf,docx,pptx,xlsx,html,htm" }
+            ],
+            prevent_duplicates : true
+        },
+
+        init: {
+            PostInit: function() {
+
+            },
+            FilesAdded: function(up, files) {
+               
+                if ($(".upitm").length-$(".err").length > 9){
+                    return;
+                }
+
+                plupload.each(files, function(file) {
+                    count = count + 1;
+                    globalFileName= file.name;
+                    $('<div id="' + file.id + '" class="upitm">\
+                        <ul class="clearfix">\
+                            <li class="tag"><em>' + count + '</em></li>\
+                            <li class="img"><img src="" /></li>\
+                            <li class="til"><span></span></li>\
+                            <li class="office"><span></span></li>\
+                            <li class="pdf"><span></span></li>\
+                            <li class="thumb"><span></span></li>\
+                            <li class="count"><span></span></li>\
+                            <li class="swf"><span></span></li>\
+                            <li class="state"><span></span></li>\
+                            <li class="percent"><span>0%</span></li>\
+                            <li class="view"></li>\
+                        </ul>\
+                        <div class="clear"></div>\
+                        <div class="ing"></div>\
+                    </div>').appendTo("#container");
+                    up.start();
+                    $("#" + file.id).find(".del > i").on("click", function () {
+                        up.removeFile(file);
+                        remove(file.id);
+                    })
+                });
+            },
+            BeforeUpload: function(up, file) {
+                $(".uptip").hide();
+                $(".queues").show();
+                $("#"+file.id).addClass("ing");
+            } ,
+            UploadProgress: function(up, file) {
+                $("#" + file.id).find(".ing").css("width", (978 * (file.percent / 100.0)) + "px").find(".percent").html("<span>" + file.percent + "%</span>");
+                $("#" + file.id).find(".percent").html("<span>" + file.percent + "%</span>");
+            },
+            FileUploaded: function(up, file, rep) {
+                var d = $.parseJSON(rep.response)
+                console.log(d);
+              if(d.status === 1){
+                  $("#" + file.id).removeClass("ing").addClass("err").find(".state").html("<span>" + d.msg + "</span>").find("span").show();
+                  var es = $("#fals").html();
+                  $("#fals").html( parseInt(es)+1)
+              } else {
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".img").html("<img width='400px' height='200px' src='"+ d.thumb+"'></img>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".til").html("<span>文件标题:"+ globalFileName+"</span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".office").html("<span>原文件:<a target='_blank' href='" + d.office + "'>"+d.office+"</a></span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".pdf").html("<span>pdf文件:<a target='_blank' href='" + d.pdf + "'>" + d.pdf+"</a></span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".thumb").html("<span>封面:<a target='_blank' href='" + d.thumb + "'>" + d.thumb+"</a></span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".count").html("<span>文档页数:"+d.count+"</span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".swf").html("<span>swf路径:<a target='_blank' href='"+ d.swf+"'>" + d.swf+"</a></span>").find("span").show();
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".state").html("<span>上传成功</span>").find("span").show();
+                  var globalFileNames=globalFileName.split(".");
+                  var file_name= encodeURIComponent(globalFileNames[0]);
+                  var url="view.html?title="+ file_name+"&suffex="+ globalFileNames[1]+"&office="+d.office+"&pdf="+d.pdf+"&thumb="+d.thumb+"&count="+d.count+"&swf="+d.swf;
+                  $("#" + file.id).removeClass("ing").addClass("upok").find(".state").html("<a href='"+url+"' target='_blank'>查看详情</a>").find("span").show();
+              }
+            },
+            Error: function(up, err) {
+                $("#" + err.file.id).removeClass("ing").addClass("err").find(".state").html("<span>" + err.message + "</span>").find("span").show();
+                var es = $("#fals").html();
+                $("#fals").html(parseInt(es) + 1)
+            }
+        }
+    });
+    uploader.init();
+});
+</script>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mumu-document.iml" filepath="$PROJECT_DIR$/mumu-document.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-document-api/mumu-document-api.iml" filepath="$PROJECT_DIR$/mumu-document-api/mumu-document-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-document-converter/mumu-document-converter.iml" filepath="$PROJECT_DIR$/mumu-document-converter/mumu-document-converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-document-service/mumu-document-service.iml" filepath="$PROJECT_DIR$/mumu-document-service/mumu-document-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mumu-document-web/mumu-document-web.iml" filepath="$PROJECT_DIR$/mumu-document-web/mumu-document-web.iml" />
+    </modules>
+  </component>
+</project>
